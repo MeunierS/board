@@ -87,12 +87,31 @@ public class BoardManager : MonoBehaviour
                         GameObject target2 = GameObject.Find($"tile {posX-2}-{posY+2}");
                         Debug.Log(target2.name);
                         //check if target as a token (child)
-                        if(target.transform.childCount>0){
-                            if(target.transform.GetChild(0).tag==player){ //check if token on tile is same token as the player who just played
+                        if(target2.transform.childCount>0){
+                            if(target2.transform.GetChild(0).tag==player){ //check if token on tile is same token as the player who just played
                                 Debug.Log(player +" win !");
                             }
                             else{
                                 Debug.Log("Child -2,+2 not of" + player);
+                                //has to test if placed token is the center of a winning diagonal with +1,-1
+                                if(posX+1>width || posY-1<0){
+                                    Debug.Log("+1,-1 not in bound");
+                                }
+                                else{
+                                    GameObject target3 = GameObject.Find($"tile {posX+1}-{posY-1}");
+                                    Debug.Log(target3.name);
+                                    if(target3.transform.childCount>0){
+                                        if(target2.transform.GetChild(0).tag==player){ //check if token on tile is same token as the player who just played
+                                            Debug.Log(player +" win !");
+                                        }
+                                        else{
+                                            Debug.Log("Child +1,-1 not of" + player);
+                                        }
+                                    }
+                                    else{
+                                        Debug.Log("No child in +1,-1");
+                                    }
+                                }
                             }
                         }
                         else{
